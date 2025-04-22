@@ -1,9 +1,9 @@
 package bd.edu.seu.examlibrarymanagement.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -14,7 +14,9 @@ public class Member {
     private String email;
     private String password;
     private String mobileNumber;
-    private int lateFine = 0;
+
+    @OneToMany(mappedBy = "member")
+    private List<BorrowRecord> borrowRecords = new ArrayList<>();
 
 
     public int getId() {
@@ -57,11 +59,5 @@ public class Member {
         this.mobileNumber = mobileNumber;
     }
 
-    public int getLateFine() {
-        return lateFine;
-    }
 
-    public void setLateFine(int lateFine) {
-        this.lateFine = lateFine;
-    }
 }

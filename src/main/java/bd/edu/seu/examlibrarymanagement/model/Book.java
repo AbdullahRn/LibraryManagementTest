@@ -12,9 +12,22 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
-    private String isbn;
+    private String isbn; //isbn ekhane thakbena, onno class e jabe, so html eo changes ante hbe
     private int numberOfCopies;
-    private LocalDate publicactionYear;
+    private int publicationYear;
+
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+
+    public void setPublicationYear(int publicactionYear) {
+        this.publicationYear = publicactionYear;
+    }
+
+    public void setGenere(String genere) {
+        Genere = genere;
+    }
+
     private String Genere;
 
 
@@ -64,19 +77,10 @@ public class Book {
         this.authors = authors;
     }
 
-    public LocalDate getPublicactionYear() {
-        return publicactionYear;
-    }
-
-    public void setPublicactionYear(LocalDate publicactionYear) {
-        this.publicactionYear = publicactionYear;
-    }
 
     public String getGenere() {
         return Genere;
     }
 
-    public void setGenere(String genere) {
-        Genere = genere;
-    }
+
 }

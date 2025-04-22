@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -34,18 +35,32 @@ public class BookService {
 //    };
 
     public List<Book> searchBooks(String keyword) {
+
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+
         List<Book> books = bookRepository.findAll();
         List<Book> filteredBooks = new ArrayList<>();
-        for(Book i: books){
-            String temp = i.getIsbn();
-            temp.concat(i.getGenere());
-            temp.concat(i.getTitle());
-            temp.concat(String.valueOf(i.getNumberOfCopies()));
-            if(temp.contains(keyword)){
-                filteredBooks.add(i);
+        for (Book i : books) {
+            String temp = "";
+            temp = temp.concat(Objects.toString(i.getIsbn(), ""));
+            temp = temp.concat(Objects.toString(i.getIsbn(), ""));
+            temp = temp.concat(Objects.toString(i.getGenere(), ""));
+            temp = temp.concat(Objects.toString(i.getTitle(), ""));
+            temp = temp.concat(Objects.toString(i.getPublicationYear(), ""));
+
+            for(String j : i.getAuthors()) {
+                temp = temp.concat(Objects.toString(j, ""));
             }
 
+            if (temp.toLowerCase().contains(keyword.toLowerCase())) {
+                filteredBooks.add(i);
+            }
         }
+
+
+
         return filteredBooks;
     }
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -44,11 +45,15 @@ public class DashboardController {
 
     @PostMapping("/books/search")
     public String objectSubmitForm(@RequestParam String query, Model model){
+        if(query == null || query.isEmpty()){
+            model.addAttribute("bookList", new ArrayList<>());
+        }
 
         List<Book> foundBooks = bookService.searchBooks(query);
+
         model.addAttribute("bookList", foundBooks);
 
-        return "redirect:/dashboard";
+        return "dashboard";
     }
 
 

@@ -190,45 +190,20 @@
 
 
                 <!-- Book List Template -->
-                <div class="container mt-5">
+                <div class="container mt-20">
                     <!-- 🔍 Search Form -->
-                    <form th:action="@{/books/search}" method="get" class="row mb-3">
+                    <form th:action="@{/books/search}" method="post" class="row mb-3">
                         <div class="col-md-10">
-                            <label>
-                                <input type="text"  class="form-control" placeholder="Search....." th:value="${param.query}">
-                            </label>
+                            <input type="text" name="query" class="form-control" placeholder="Search..." th:value="${param.query}">
                         </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-primary w-100">Search</button>
                         </div>
                     </form>
 
-                    <!-- 📚 Book Table -->
+
+
                     <div class="row">
-                        <div class="col-md-12">
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>ISBN</th>
-                                    <th>Title</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="book : ${books}">
-                                    <td th:text="${book.id}">1</td>
-                                    <td th:text="${book.title}">Sample Title</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-                <div class="row">
                     <div class="col-md-12">
                         <div class="card card-round">
                             <div class="card-header">
