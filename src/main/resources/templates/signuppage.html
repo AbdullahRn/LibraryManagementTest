@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Forms - Kaiadmin Bootstrap 5 Admin Dashboard</title>
+  <meta
+          content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+          name="viewport"
+  />
+  <link
+          rel="icon"
+          href="../img/kaiadmin/favicon.ico"
+          type="image/x-icon"
+  />
+
+  <!-- Fonts and icons -->
+  <script src="../js/plugin/webfont/webfont.min.js"></script>
+  <script>
+    WebFont.load({
+      google: { families: ["Public Sans:300,400,500,600,700"] },
+      custom: {
+        families: [
+          "Font Awesome 5 Solid",
+          "Font Awesome 5 Regular",
+          "Font Awesome 5 Brands",
+          "simple-line-icons",
+        ],
+        urls: ["../css/fonts.min.css"],
+      },
+      active: function () {
+        sessionStorage.fonts = true;
+      },
+    });
+  </script>
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../css/plugins.min.css" />
+  <link rel="stylesheet" href="../css/kaiadmin.min.css" />
+
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link rel="stylesheet" href="../css/demo.css" />
+
+</head>
+
+
+<body style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa;">
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card">
+        <div class="card-header text-center">
+          <h4 class="card-title mb-0">User Registration</h4>
+        </div>
+        <div class="card-body">
+          <form th:action="@{/signup/submit}" method="post" th:object="${member}">
+
+            <div th:if="${param.error != null}" class="alert alert-danger">
+              Email already exists!!
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="name" class="form-label">Full Name</label>
+              <input th:field="*{name}" type="text" class="form-control" id="name" name="name" placeholder="Enter full name" required />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="contact" class="form-label">Contact Number</label>
+              <input th:field="*{mobileNumber}" type="text" class="form-control" id="contact" name="contact" placeholder="Enter contact number" required />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input th:field="*{email}" thtype="email" class="form-control" id="email" name="username" placeholder="Enter email" required />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input th:field="*{password}" type="password" class="form-control" id="password" name="password" placeholder="Enter password" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
