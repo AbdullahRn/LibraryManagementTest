@@ -37,7 +37,7 @@ public class BookUpdate {
         Book book = new Book();
         book.setIsbn("600");
         book.setTitle("Something");
-        book.setNumberOfCopies(20);
+//        book.setNumberOfCopies(20);
         book.setAuthors(new ArrayList<>());
         book.getAuthors().add("GGGGG");
         book.getAuthors().add("SSSSSS");

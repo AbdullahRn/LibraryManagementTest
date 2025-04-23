@@ -13,8 +13,16 @@ public class Book {
     private int id;
     private String title;
     private String isbn; //isbn ekhane thakbena, onno class e jabe, so html eo changes ante hbe
-    private int numberOfCopies;
     private int publicationYear;
+    private int numberOfCopies;
+
+    public int getNumberOfCopies() {
+        return numberOfCopies;
+    }
+
+    public void setNumberOfCopies(int numberOfCopies) {
+        this.numberOfCopies = numberOfCopies;
+    }
 
     public int getPublicationYear() {
         return publicationYear;
@@ -61,13 +69,6 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public int getNumberOfCopies() {
-        return numberOfCopies;
-    }
-
-    public void setNumberOfCopies(int numberOfCopies) {
-        this.numberOfCopies = numberOfCopies;
-    }
 
     public List<String> getAuthors() {
         return authors;

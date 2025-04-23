@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface BookCopyRepository extends JpaRepository<BookCopy, Integer> {
     Optional<BookCopy> findFirstByBookIdAndAvailableTrue(int bookId);
+    int countByBookIdAndAvailableTrue(int bookId);
 }

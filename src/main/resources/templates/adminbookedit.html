@@ -1,10 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Book Details</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="/img/kaiadmin/favicon.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { families: ["Public Sans:300,400,500,600,700"] },
+            custom: {
+                families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+                urls: ["/css/fonts.min.css"],
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            },
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/plugins.min.css" />
+    <link rel="stylesheet" href="/css/kaiadmin.min.css" />
 </head>
 <body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+            <div class="logo-header" data-background-color="dark">
+                <a href="index.html" class="logo">
+                    <img src="/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20" />
+                </a>
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+                    <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
+                </div>
+                <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
+            </div>
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+            <div class="sidebar-content">
+                <ul class="nav nav-secondary">
+                    <li class="nav-item active">
+                        <a th:href="@{/dashboard}"><i class="fas fa-home"></i><p>Dashboard</p></a>
+                    </li>
+                    <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Options</h4></li>
+                    <li class="nav-item"><a th:href="@{/adminBookEdit}"><i class="fas fa-layer-group"></i><p>Books</p></a></li>
+                    <li class="nav-item"><a th:href="@{/adminUserEdit}"><i class="fas fa-th-list"></i><p>Users</p></a></li>
+                    <li class="nav-item"><a th:href="@{/adminManageBorrow}"><i class="fas fa-pen-square"></i><p>Manage Borrowing</p></a></li>
+                    <li class="nav-item mt-auto"><a th:href="@{/signout}"><i class="fas fa-sign-out-alt"></i><p>Sign Out</p></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End Sidebar -->
 
+
+
+
+    <div class="main-panel">
+
+
+
+
+        <form th:action="@{/edit/add}" th:object="${book}" method="post">
+            <h2 class="mb-4">Add Book</h2>
+
+            <div class="form-group mb-3">
+                <label for="title">Title</label>
+                <input type="text" th:field="*{title}" class="form-control" id="title" placeholder="Book title" required />
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="year">Genre</label>
+                <input type="text" th:field="*{genere}" class="form-control" id="title" placeholder="Genre" />
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="isbn">ISBN</label>
+                <input type="number" th:field="*{isbn}" class="form-control" id="isbn" placeholder="ISBN" />
+            </div>
+
+
+            <div class="form-group mb-3">
+                <label for="year">Published Year</label>
+                <input type="number" th:field="*{publicationYear}" class="form-control" id="year" placeholder="Year" />
+            </div>
+
+            <div class="form-group mb-3">
+            <label for="year">Number of Copies</label>
+            <input type="number" th:field="*{numberOfCopies}" class="form-control" id="copies" placeholder="Year" />
+    </div>
+
+            <button type="submit" class="btn btn-primary w-100">Add Book</button>
+        </form>
+
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+<!--        ///////////////////-->
+
+
+        <form th:action="@{/edit/submit}" th:object="${book}" method="post">
+            <h2 class="mb-4">Update  Book</h2>
+            <div class="form-group mb-3">
+                <label for="selectedBook">Select Book</label>
+                <select class="form-control" id="selectedBook" name="isbn" th:field="*{isbn}" required>
+                    <option value="" disabled selected>Select a book</option>
+                    <option th:each="bookItem : ${bookList}"
+                            th:value="${bookItem.isbn}"
+                            th:text="${bookItem.title}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="title">Title</label>
+                <input type="text" th:field="*{title}" class="form-control" id="title" placeholder="Book title" required />
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="year">Genre</label>
+                <input type="number" th:field="*{genere}" class="form-control" id="genre" placeholder="Year" />
+            </div>
+
+
+            <div class="form-group mb-3">
+                <label for="year">Published Year</label>
+                <input type="number" th:field="*{publicationYear}" class="form-control" id="year" placeholder="Year" />
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Update Book</button>
+        </form>
+<!---->
+
+
+
+
+
+
+
+
+
+
+
+        <!--        //////////////////////////////////////////////////////////////////////////-->
+
+        <div class="container">
+            <div class="page-inner">
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card card-round">
+                            <div class="card-header">
+                                <div class="card-head-row card-tools-still-right">
+                                    <h4 class="card-title">Book details</h4>
+                                </div>
+                                <p class="card-category">Details of the Books</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive table-hover table-sales">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>ISBN</th>
+                                            <th>Title</th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="book : ${bookList}">
+                                            <td th:text="${book.isbn}"></td>
+                                            <td th:text="${book.title}"></td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Scripts -->
+<script src="/js/core/jquery-3.7.1.min.js"></script>
+<script src="/js/core/popper.min.js"></script>
+<script src="/js/core/bootstrap.min.js"></script>
+<script src="/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="/js/kaiadmin.min.js"></script>
 </body>
 </html>

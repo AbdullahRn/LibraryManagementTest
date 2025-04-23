@@ -7,9 +7,5 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class AdminMemberCreateController {
-    @GetMapping("/adminMemberCreate")
-    public String home(Model model){
-        model.addAttribute("member", new Member());
-        return "adminMemberCreate"; // Returns dashboard.html from templates/
-    }
+
 }

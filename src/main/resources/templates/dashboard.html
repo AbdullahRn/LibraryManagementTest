@@ -29,6 +29,7 @@
             },
             active: function () {
                 sessionStorage.fonts = true;
+                sessionStorage.fonts = true;
             },
         });
     </script>
@@ -74,7 +75,7 @@
             <div class="sidebar-content">
                 <ul class="nav nav-secondary">
                     <li class="nav-item active">
-                        <a href="#">
+                        <a th:href="@{/dashboard}">
                             <i class="fas fa-home"></i>
                             <p>Dashboard</p>
                         </a>
@@ -86,7 +87,7 @@
                         <h4 class="text-section">Options</h4>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/books}">
+                        <a th:href="@{/adminBookEdit}">
                             <i class="fas fa-layer-group"></i>
                             <p>Books</p>
                         </a>
@@ -98,9 +99,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#">
+                        <a th:href="@{/adminManageBorrow}">
                             <i class="fas fa-pen-square"></i>
-                            <p>Forms</p>
+                            <p>Manage Borrowing</p>
                         </a>
                     </li>
 
@@ -223,14 +224,13 @@
                                                 <tr>
                                                     <th>ISBN</th>
                                                     <th>Title</th>
-                                                    <th class="text-end">Number of Copies</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr th:each="book : ${bookList}">
                                                     <td th:text="${book.isbn}"></td>
                                                     <td th:text="${book.title}"></td>
-                                                    <td class="text-end" th:text="${book.numberOfCopies}"></td>
+
                                                 </tr>
                                                 </tbody>
                                             </table>

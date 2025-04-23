@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Signup - Library Management System</title>
+  <title>Manage Borrowed Books</title>
   <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-  <link rel="icon" href="/img/kaiadmin/favicon.ico" type="image/x-icon" />
 
   <!-- Fonts and icons -->
   <script src="/js/plugin/webfont/webfont.min.js"></script>
@@ -12,17 +11,12 @@
     WebFont.load({
       google: { families: ["Public Sans:300,400,500,600,700"] },
       custom: {
-        families: [
-          "Font Awesome 5 Solid",
-          "Font Awesome 5 Regular",
-          "Font Awesome 5 Brands",
-          "simple-line-icons",
-        ],
-        urls: ["/css/fonts.min.css"],
+        families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+        urls: ["/css/fonts.min.css"]
       },
       active: function () {
         sessionStorage.fonts = true;
-      },
+      }
     });
   </script>
 
@@ -30,7 +24,6 @@
   <link rel="stylesheet" href="/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/css/plugins.min.css" />
   <link rel="stylesheet" href="/css/kaiadmin.min.css" />
-  <link rel="stylesheet" href="/css/demo.css" />
 </head>
 <body>
 <div class="wrapper">
@@ -83,7 +76,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a th:href="@{/adminUserEdit}">
+            <a th:href="@{/adminBookEdit}">
               <i class="fas fa-th-list"></i>
               <p>Users</p>
             </a>
@@ -110,60 +103,77 @@
 
   <!-- Main Panel -->
   <div class="main-panel">
-    <div class="content">
-      <div class="page-inner">
-        <div class="row justify-content-center">
-          <div class="col-md-6 col-lg-5">
-            <div class="card card-round">
-              <div class="card-header text-center">
-                <h4 class="card-title mb-0">User Registration</h4>
-              </div>
+    <div class="container">
+      <!-- Search Form -->
+      <form th:action="@{/members/search}" method="post" class="row mb-3">
+        <div class="col-md-10">
+          <input type="text" name="query" class="form-control" placeholder="Search members..." th:value="${param.query}">
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+      </form>
 
-              <br>
-              <br>
-              <div class="card-body">
-                <form th:action="@{/signup/submit}" method="post" th:object="${member}">
-                  <div th:if="${param.error != null}" class="alert alert-danger">
-                    Email already exists!
-                  </div>
-                  <div class="form-group mb-3">
-                    <label for="name">Full Name</label>
-                    <input th:field="*{name}" type="text" class="form-control" id="name" placeholder="Enter full name" required />
-                  </div>
-
-                  <div class="form-group mb-3">
-                    <label for="contact">Contact Number</label>
-                    <input th:field="*{mobileNumber}" type="text" class="form-control" id="contact" placeholder="Enter contact number" required />
-                  </div>
-
-                  <div class="form-group mb-3">
-                    <label for="email">Email</label>
-                    <input th:field="*{email}" type="email" class="form-control" id="email" placeholder="Enter email" required />
-                  </div>
-
-                  <div class="form-group mb-3">
-                    <label for="password">Password</label>
-                    <input th:field="*{password}" type="password" class="form-control" id="password" placeholder="Enter password" required />
-                  </div>
-
-                  <button type="submit" class="btn btn-primary w-100">Submit</button>
-                </form>
-              </div>
-            </div>
+      <!-- Member Table -->
+      <div class="card card-round">
+        <div class="card-header">
+          <div class="card-head-row card-tools-still-right">
+            <h4 class="card-title">Member Borrow Records</h4>
           </div>
-        </div> <!-- /.row -->
-      </div> <!-- /.page-inner -->
-    </div> <!-- /.content -->
+          <p class="card-category">Click the red cross to mark books as returned</p>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive table-hover table-sales">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Member ID</th>
+                <th>Name</th>
+                <th>Borrowed Book</th>
+                <th class="text-end">Return</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="m : ${books}">
+                <td th:text="${m.id}">1</td>
+                <td th:text="${m.title}">John Doe</td>
+                <td th:text="${m.numberOfCopies}">Book Title</td>
+                <td class="text-end">
+                  <a th:href="@{/bookManageTask}">...</a>
+                    <button type="submit" class="btn btn-icon btn-link btn-danger btn-sm">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
+
 </div>
 
-<!-- JS Files -->
+<!-- Scripts -->
 <script src="/js/core/jquery-3.7.1.min.js"></script>
 <script src="/js/core/popper.min.js"></script>
 <script src="/js/core/bootstrap.min.js"></script>
 <script src="/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="/js/plugin/datatables/datatables.min.js"></script>
 <script src="/js/kaiadmin.min.js"></script>
-<script src="/js/setting-demo.js"></script>
-<script src="/js/demo.js"></script>
+
+<!-- Remove Row Script -->
+<script>
+  function returnBook(button) {
+    // Instantly remove the row
+    const row = button.closest('tr');
+    if (row) {
+      row.remove();
+    }
+  }
+</script>
 </body>
 </html>
