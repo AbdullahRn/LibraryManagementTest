@@ -32,7 +32,7 @@ public class SignUpController {
         }
 
         memberService.save(member);
-        return "redirect:/";
+        return "redirect:/dashboard";
     }
 
 

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,7 +67,7 @@ public class AdminEditBook {
     @PostMapping("/edit/submit")
     public String objectSubmitForm1(@ModelAttribute Book book, Model model){
 //        Book books = bookService.searchByTitle(book.getTitle());
-        Book books = bookService.findByIsbn(book.getIsbn());
+        Book books = bookService.searchByTitle(book.getTitle());
 
 
         if (books == null) {
@@ -94,27 +93,13 @@ public class AdminEditBook {
         return "redirect:/adminBookEdit";
     }
 
-    @PostMapping("/userEdit/submit")
-    public String objectSubmitForm2(@ModelAttribute Member member, Model model) {
-
-        int id = member.getId().intValue();
-        Member existing = memberService.findById(id);
-
-        if (existing == null) {
-            model.addAttribute("error", "No member found with ID: " + member.getId());
-            return "redirect:/adminUserEdit";
-        }
-
-
-        existing.setName(member.getName());
-        existing.setEmail(member.getEmail());
-        existing.setMobileNumber(member.getMobileNumber());
-
-
-        memberService.save(existing);
-
-        return "redirect:/adminUserEdit";
+    @PostMapping("/bookReturnProcedure")
+    public String returnBook(@RequestParam("isbn") int isbn,  @RequestParam("memberId") int memberId) {
+        borrowRecordService.returnBook(isbn, memberId);
+        return "redirect:/adminManageBorrow";
     }
+
+
 
 
 

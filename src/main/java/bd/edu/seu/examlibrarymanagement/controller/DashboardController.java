@@ -1,6 +1,5 @@
 package bd.edu.seu.examlibrarymanagement.controller;
 
-import bd.edu.seu.examlibrarymanagement.model.Admin;
 import bd.edu.seu.examlibrarymanagement.model.Book;
 import bd.edu.seu.examlibrarymanagement.model.Member;
 import bd.edu.seu.examlibrarymanagement.service.BookService;
@@ -84,7 +83,7 @@ public class DashboardController {
         Book books = bookService.findByIsbn(book.getIsbn());
 
         int id = loginMember.getId().intValue();
-        borrowRecordService.BorrowBook(id, book.getId());
+        borrowRecordService.BorrowBook(id, books.getId());
 
 
         return "redirect:/userDashboard";

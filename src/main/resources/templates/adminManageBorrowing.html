@@ -104,18 +104,30 @@
   <!-- Main Panel -->
   <div class="main-panel">
     <div class="container">
-      <!-- Search Form -->
-      <form th:action="@{/members/search}" method="post" class="row mb-3">
-        <div class="col-md-10">
-          <input type="text" name="query" class="form-control" placeholder="Search members..." th:value="${param.query}">
+
+      <!-- Member Selection Form -->
+      <form th:action="@{/borrow/edit}" th:object="${member}" method="post">
+        <h2 class="mb-4">Update Member</h2>
+
+        <div class="form-group mb-3">
+          <label for="selectedMember">Select Member</label>
+          <select class="form-control" id="selectedMember" name="id" th:field="*{id}" required>
+            <option value="" disabled selected>Select a member</option>
+            <option th:each="memberItem : ${memberList}"
+                    th:value="${memberItem.id}"
+                    th:text="${memberItem.name}">
+            </option>
+          </select>
         </div>
-        <div class="col-md-2">
-          <button type="submit" class="btn btn-primary w-100">Search</button>
-        </div>
+
+
+        <button type="submit" class="btn btn-primary w-100">Show Books</button>
       </form>
 
+
+
       <!-- Member Table -->
-      <div class="card card-round">
+      <div class="card card-round mt-4">
         <div class="card-header">
           <div class="card-head-row card-tools-still-right">
             <h4 class="card-title">Member Borrow Records</h4>
@@ -127,23 +139,26 @@
             <table class="table">
               <thead>
               <tr>
-                <th>Member ID</th>
+                <th>ISBN</th>
                 <th>Name</th>
-                <th>Borrowed Book</th>
+                <th>Book ID</th>
                 <th class="text-end">Return</th>
               </tr>
               </thead>
               <tbody>
               <tr th:each="m : ${books}">
-                <td th:text="${m.id}">1</td>
-                <td th:text="${m.title}">John Doe</td>
-                <td th:text="${m.numberOfCopies}">Book Title</td>
+                <td th:text="${m.getIsbn()}">1</td>
+                <td th:text="${m.getBook().getTitle()}">John Doe</td>
+                <td th:text="${m.getBook().getId()}">Book Title</td>
                 <td class="text-end">
-                  <a th:href="@{/bookManageTask}">...</a>
+                  <form th:action="@{/bookReturnProcedure}" method="post" style="display:inline;">
+                    <input type="hidden" name="isbn" th:value="${m.getIsbn()}" />
+                    <input type="hidden" name="memberId" th:value="${member.id}" />
                     <button type="submit" class="btn btn-icon btn-link btn-danger btn-sm">
                       <i class="fas fa-times"></i>
                     </button>
                   </form>
+
                 </td>
               </tr>
               </tbody>

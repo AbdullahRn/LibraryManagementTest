@@ -31,18 +31,19 @@ public class BookService {
         this.bookCopyService = bookCopyService;
     }
 
-//    public void save (Book book) {
-//        for(int i =0; i<book.getNumberOfCopies(); i++){
-//            BookCopy bookCopy = new BookCopy();
-//            bookCopy.setBook(book);
-//            bookCopyRepository.save(bookCopy);
-//        }
+    public void save (Book book) {
+        bookRepository.save(book);
+        for(int i =0; i<book.getNumberOfCopies(); i++){
+            BookCopy bookCopy = new BookCopy();
+            bookCopy.setBook(book);
+            bookCopyRepository.save(bookCopy);
+        }
+
+    }
+
+//    public void save(Book book){
 //        bookRepository.save(book);
 //    }
-
-    public void save(Book book){
-        bookRepository.save(book);
-    }
 
     public int getAvailableCopiesCount(int bookId) {
         return (int) bookCopyRepository.countByBookIdAndAvailableTrue(bookId);

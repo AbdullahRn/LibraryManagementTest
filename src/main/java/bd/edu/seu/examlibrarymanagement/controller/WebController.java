@@ -1,10 +1,7 @@
 package bd.edu.seu.examlibrarymanagement.controller;
 
-import bd.edu.seu.examlibrarymanagement.model.Admin;
-import bd.edu.seu.examlibrarymanagement.model.Book;
-import bd.edu.seu.examlibrarymanagement.model.Member;
+import bd.edu.seu.examlibrarymanagement.model.*;
 import bd.edu.seu.examlibrarymanagement.service.*;
-import org.apache.catalina.util.ErrorPageSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -101,15 +98,67 @@ public class WebController {
 
     @GetMapping("/adminManageBorrow")
     public String page(Model model){
-        model.addAttribute("books", new ArrayList<>()); //ei line theke start hbe
+        model.addAttribute("memberList", borrowRecordService.GetingUsersWhomHaventReturnedBook());
+        model.addAttribute("member", new Member()); //ei line theke start hbe
 //        model.addAttribute("totalUser", memberService.getAll().size());
 //        List<Book> bookList = bookService.findAll();
 
 //        int totalCopies = bookList.stream().mapToInt(Book::getNumberOfCopies).sum();
 //        model.addAttribute("totalBooks", totalCopies);
 
+
+
         return "adminManageBorrowing";
     }
+
+    @PostMapping("/borrow/edit")
+    public String showBorrowedBooks( Model model, @ModelAttribute Member member ) {
+        int id = member.getId().intValue();
+
+        Member selectedMember = memberService.findById(member.getId());
+        List<BookCopy> borrowedBooks = borrowRecordService.listOfBooksTakenByMember(member.getId());
+
+
+        model.addAttribute("member", selectedMember);
+        model.addAttribute("memberList", borrowRecordService.GetingUsersWhomHaventReturnedBook());
+        model.addAttribute("books", borrowRecordService.listOfBooksTakenByMember(member.getId()));
+//        System.out.println(member.getId());
+//        for(Book i: borrowRecordService.GettingBooksBorrowedByMember(member.getId())){
+//            System.out.println(i.getTitle());
+//        }
+//        System.out.println(borrowRecordService.GettingBooksBorrowedByMember(member.getId()).size());
+
+        return "adminManageBorrowing";
+    }
+
+
+
+
+    //Borrow edit er jonno nicher method ta edit krte hbe
+
+
+//    @PostMapping("/userEdit/submit")
+//    public String objectSubmitForm2(@ModelAttribute Member member, Model model) {
+//
+//        int id = member.getId().intValue();
+//        Member existing = memberService.findById(id);
+//
+//        if (existing == null) {
+//            model.addAttribute("error", "No member found with ID: " + member.getId());
+//            return "redirect:/adminUserEdit";
+//        }
+//
+//
+//        existing.setName(member.getName());
+//        existing.setEmail(member.getEmail());
+//        existing.setMobileNumber(member.getMobileNumber());
+//
+//
+//        memberService.save(existing);
+//
+//        return "redirect:/adminUserEdit";
+//    }
+
 
 
     @GetMapping("/adminUserEdit")
